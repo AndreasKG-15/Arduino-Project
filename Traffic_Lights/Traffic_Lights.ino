@@ -1,4 +1,7 @@
-
+//LCD Initialize:
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 // Traffic lights - side A
 #define LEDGreen 4
 #define LEDYellow 1
@@ -35,7 +38,11 @@ test(LEDGreenA);
 test(LEDYellowA);
 test(LEDRedA);*/
   Serial.begin(9600);
-  // put your setup code here, to run once:
+//Start LCD:
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0, 0);
+  lcd.print("Wait before cross:");
   
 }
 
@@ -47,6 +54,25 @@ void loop() {
     waitTime = 20;
   }
   TrafficLights();
+
+//Countdown Display if Button Pressed
+  if (ButtonPressed){
+    lcd.setCursor(0, 1);
+    lcd.print("Time: ");
+    lcd.print(waitTime);
+    lcd.print("s ");
+//Timer Countdown
+  if (waitTime > 0) {
+    delay(1000);   // 1 second delay
+    waitTime--;
+  } else 
+    ButtonPressed = false 
+    digitalWrite(pedestrianLEDRed, LOW);
+    digitalWrite(pedestrianLEDGreen, HIGH);
+    delay(5000); // Allow pedestrians to cross for 5 seconds
+    digitalWrite(pedestrianLEDGreen, LOW);
+    digitalWrite(pedestrianLEDRed, HIGH);
+  
 
 
 /* Toby's kode
