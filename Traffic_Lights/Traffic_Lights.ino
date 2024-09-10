@@ -1,4 +1,7 @@
-
+//LCD Initialize:
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 // Traffic lights - side A
 #define LEDGreen 4
 #define LEDYellow 1
@@ -33,6 +36,12 @@ void setup() {
   pinMode(Buzzer,OUTPUT);
 
 
+  pinMode(LEDGreenA, OUTPUT);
+  pinMode(LEDYellowA, OUTPUT);
+  pinMode(LEDRedA, OUTPUT);
+  pinMode(PedestrianLEDGreen, OUTPUT);
+  pinMode(PedestrianLEDRed, OUTPUT);
+  pinMode(PedestrianButton, INPUT);
 
 /*test(LEDGreen);
 test(LEDYellow);
@@ -40,20 +49,49 @@ test(LEDRed);
 test(LEDGreenA);
 test(LEDYellowA);
 test(LEDRedA);*/
-  Serial.begin(9600);
-  // put your setup code here, to run once:
+
+//Start LCD:
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0, 0);
+  lcd.print("Wait before cross:");
   
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if(digitalRead(PedestrianButton) == HIGH && !ButtonPressed)
+  digitalWrite(PedestrianLEDRed, HIGH);
+  Serial.println(digitalRead(PedestrianButton));
+  if(digitalRead(PedestrianButton) == HIGH)
   {
     ButtonPressed = true;
     waitTime = 20;
   }
-  TrafficLights();
 
+//Countdown Display if Button Pressed
+  while(waitTime>0 && ButtonPressed)
+  {
+    lcd.setCursor(0, 1);
+    lcd.print("Time: ");
+    lcd.print(waitTime);
+    lcd.print("s ");
+    delay(1000);
+    waitTime--;
+  }
+//Timer Countdown
+  if(ButtonPressed == true)
+  {
+    digitalWrite(PedestrianLEDRed, LOW);
+    digitalWrite(PedestrianLEDGreen, HIGH);
+    lcd.clear();
+    delay(5000); // Allow pedestrians to cross for 5 seconds
+    digitalWrite(PedestrianLEDGreen, LOW);
+    digitalWrite(PedestrianLEDRed, HIGH);
+    ButtonPressed = false;
+    lcd.print("Wait before cross:");
+  }
+
+  //TrafficLights();
 
 /* Toby's kode
 digitalWrite(LEDRedA,HIGH);
