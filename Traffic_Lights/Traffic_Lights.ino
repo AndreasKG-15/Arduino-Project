@@ -30,6 +30,12 @@ void setup() {
   pinMode(LEDGreen, OUTPUT);
   pinMode(LEDYellow, OUTPUT);
   pinMode(LEDRed, OUTPUT);
+  pinMode(LEDGreenA, OUTPUT);
+  pinMode(LEDYellowA, OUTPUT);
+  pinMode(LEDRedA, OUTPUT);
+  pinMode(PedestrianLEDGreen, OUTPUT);
+  pinMode(PedestrianLEDRed, OUTPUT);
+  pinMode(PedestrianButton, INPUT);
 
 /*test(LEDGreen);
 test(LEDYellow);
@@ -37,7 +43,7 @@ test(LEDRed);
 test(LEDGreenA);
 test(LEDYellowA);
 test(LEDRedA);*/
-  Serial.begin(9600);
+
 //Start LCD:
   lcd.init();
   lcd.backlight();
@@ -48,12 +54,51 @@ test(LEDRedA);*/
 
 void loop() {
   // put your main code here, to run repeatedly:
+  digitalWrite(PedestrianLEDRed, HIGH);
   if(digitalRead(PedestrianButton) == HIGH && !ButtonPressed)
   {
     ButtonPressed = true;
     waitTime = 20;
   }
-  TrafficLights();
+  Serial.println(digitalRead(PedestrianButton));
+  //TrafficLights();
+  // Starting point
+  digitalWrite(LEDRed, HIGH);
+  digitalWrite(LEDRedA, HIGH);
+  delay(1500);
+  // Start execution - side A
+  digitalWrite(LEDYellow, HIGH);
+  delay(3000);
+  // Green - side A
+  digitalWrite(LEDRed, LOW);
+  digitalWrite(LEDYellow, LOW);
+  digitalWrite(LEDGreen, HIGH);
+  delay(5000);
+  // Green -> yellow - side A
+  digitalWrite(LEDGreen, LOW);
+  digitalWrite(LEDYellow, HIGH);
+  delay(2000);
+  // Yellow -> Red - side A
+  digitalWrite(LEDYellow, LOW);
+  digitalWrite(LEDRed, HIGH);
+  delay(3000);
+
+  // Start execution - side B
+  digitalWrite(LEDYellowA, HIGH);
+  delay(3000);
+  // Red and Yellow ON - side B
+  digitalWrite(LEDRedA, LOW);
+  digitalWrite(LEDYellowA, LOW);
+  digitalWrite(LEDGreenA, HIGH);
+  delay(10000);
+  // Green -> yellow - side B
+  digitalWrite(LEDGreenA, LOW);
+  digitalWrite(LEDYellowA, HIGH);
+  delay(2000);
+  // Yellow -> Red - side B
+  digitalWrite(LEDYellowA, LOW);
+  digitalWrite(LEDRedA, HIGH);
+  delay(5000);
 
 //Countdown Display if Button Pressed
   if (ButtonPressed){
@@ -61,18 +106,20 @@ void loop() {
     lcd.print("Time: ");
     lcd.print(waitTime);
     lcd.print("s ");
+  }
 //Timer Countdown
   if (waitTime > 0) {
     delay(1000);   // 1 second delay
     waitTime--;
   } else 
-    ButtonPressed = false 
-    digitalWrite(pedestrianLEDRed, LOW);
-    digitalWrite(pedestrianLEDGreen, HIGH);
+  {
+    ButtonPressed = false;
+    digitalWrite(PedestrianLEDRed, LOW);
+    digitalWrite(PedestrianLEDGreen, HIGH);
     delay(5000); // Allow pedestrians to cross for 5 seconds
-    digitalWrite(pedestrianLEDGreen, LOW);
-    digitalWrite(pedestrianLEDRed, HIGH);
-  
+    digitalWrite(PedestrianLEDGreen, LOW);
+    digitalWrite(PedestrianLEDRed, HIGH);
+  }
 
 
 /* Toby's kode
