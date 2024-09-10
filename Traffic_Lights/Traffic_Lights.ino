@@ -25,9 +25,9 @@ test(LEDRed);
 test(LEDGreenA);
 test(LEDYellowA);
 test(LEDRedA);
-
-
-
+  Serial.begin(9600);
+  // put your setup code here, to run once:
+  
 }
 
 void loop() {
@@ -40,8 +40,30 @@ void loop() {
 
 
 
-}
+digitalWrite(LEDGreen,HIGH);
+digitalWrite(LEDRedA,HIGH);
+delay(5000);
 
+digitalWrite(LEDGreen,LOW);
+digitalWrite(LEDYellow,HIGH);
+delay(3000);
+
+digitalWrite(LEDYellow,LOW);
+digitalWrite(LEDRed,HIGH);
+digitalWrite(LEDGreenA,HIGH);
+delay(10000);
+
+digitalWrite(LEDGreenA,LOW);
+digitalWrite(LEDYellowA,HIGH);
+delay(3000)
+
+digitalWrite(LEDYellowA,LOW);
+digitalWrite(LEDRedA,LOW);
+digitalWrite(LEDGreen,HIGH);
+
+
+}
+}
 int test(int LED)
 {
   digitalWrite(LED, HIGH);
