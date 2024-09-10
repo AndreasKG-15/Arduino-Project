@@ -11,9 +11,12 @@
 #define PedestrianLEDGreen 6
 #define PedestrianLEDRed 7
 #define PedestrianButton 12
-asd
+// Buzzer
+#define Buzzer
+
 int waitTime = 0;
 bool ButtonPressed = false;
+unsigned long lastBuzzTime = 0;
 
 
 void setup() {
@@ -27,6 +30,9 @@ void setup() {
   pinMode(LEDGreen, OUTPUT);
   pinMode(LEDYellow, OUTPUT);
   pinMode(LEDRed, OUTPUT);
+  pinMode(Buzzer,OUTPUT);
+
+
 
 /*test(LEDGreen);
 test(LEDYellow);
@@ -115,6 +121,34 @@ void TrafficLights()
   digitalWrite(LEDYellowA, LOW);
   digitalWrite(LEDRedA, HIGH);
   delay(5000);
+
+  // Buzzer sound for blind people
+  if (ButtonPressed && waitTime == 0) {
+    digitalWrite(PedestrianLEDRed,LOW);
+    digitalWrite(PedestrianLEDGreen,HIGH);
+  } else {
+    digitalWrite(PedestrianLEDGreen,LOW);
+    digitalWrite(PedestrianLEDRed,HIGH);
+  }
+
+  while (true) {
+    unsigned long currentTime = millis();
+    if (digitalRead(PedestrianLEDGreen) == HIGH) {
+      if (currentTime - lastBuzzTime >= 500) {
+        digitalWrite(Buzzer,HIGH);
+        delay(50);
+        digitalWrite(Buzzer,LOW);
+        lastBuzzTime = currentTime;
+      }
+    } else {
+      if (currentTime - lastBuzzTime >= 1000) {
+        digitalWrite(Buzzer,HIGH);
+        delay(50);
+        digitalWrite(Buzzer,LOW);
+        lastBuzzTime = currentTime;
+      }
+    }
+  }
 }
 
 void Pedestrians()
