@@ -15,7 +15,7 @@ LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars
 #define PedestrianLEDRed 7
 #define PedestrianButton 12
 // Buzzer
-#define Buzzer
+#define Buzzer 11
 
 int waitTime = 0;
 bool ButtonPressed = false;
@@ -62,6 +62,9 @@ void loop() {
   // put your main code here, to run repeatedly:
   digitalWrite(PedestrianLEDRed, HIGH);
   Serial.println(digitalRead(PedestrianButton));
+  digitalWrite(Buzzer, HIGH);
+  digitalWrite(Buzzer, LOW);
+  delay(1000);
   if(digitalRead(PedestrianButton) == HIGH)
   {
     ButtonPressed = true;
@@ -90,7 +93,32 @@ void loop() {
     ButtonPressed = false;
     lcd.print("Wait before cross:");
   }
+  // Buzzer sound for blind people
 
+  while (ButtonPressed == true) 
+  {
+    unsigned long currentTime = millis();
+    if (digitalRead(PedestrianLEDRed) == HIGH) 
+    {
+      if (currentTime - lastBuzzTime >= 1000) 
+      {
+        digitalWrite(Buzzer,HIGH);
+        delay(50);
+        digitalWrite(Buzzer,LOW);
+        lastBuzzTime = currentTime;
+      }
+    } 
+    else 
+    {
+      if (currentTime - lastBuzzTime >= 500) 
+      {
+        digitalWrite(Buzzer,HIGH);
+        delay(50);
+        digitalWrite(Buzzer,LOW);
+        lastBuzzTime = currentTime;
+      }
+    }
+  }
   //TrafficLights();
 
 /* Toby's kode
