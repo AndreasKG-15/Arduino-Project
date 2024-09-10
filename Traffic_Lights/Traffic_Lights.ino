@@ -62,9 +62,6 @@ void loop() {
   // put your main code here, to run repeatedly:
   digitalWrite(PedestrianLEDRed, HIGH);
   Serial.println(digitalRead(PedestrianButton));
-  digitalWrite(Buzzer, HIGH);
-  digitalWrite(Buzzer, LOW);
-  delay(1000);
   if(digitalRead(PedestrianButton) == HIGH)
   {
     ButtonPressed = true;
@@ -95,7 +92,7 @@ void loop() {
   }
   // Buzzer sound for blind people
 
-  while (ButtonPressed == true) 
+  /*while (ButtonPressed == true) 
   {
     unsigned long currentTime = millis();
     if (digitalRead(PedestrianLEDRed) == HIGH) 
@@ -118,33 +115,8 @@ void loop() {
         lastBuzzTime = currentTime;
       }
     }
-  }
-  //TrafficLights();
-
-/* Toby's kode
-digitalWrite(LEDRedA,HIGH);
-digitalWrite(LEDRed, LOW);
-delay(5000);
-
-digitalWrite(LEDGreen,LOW);
-digitalWrite(LEDYellow,HIGH);
-delay(3000);
-
-digitalWrite(LEDYellow,LOW);
-digitalWrite(LEDRed,HIGH);
-digitalWrite(LEDGreenA,HIGH);
-digitalWrite(LEDRedA, LOW);
-delay(10000);
-
-digitalWrite(LEDGreenA,LOW);
-digitalWrite(LEDYellowA,HIGH);
-digitalWrite(LEDRedA, HIGH);
-delay(3000);
-
-digitalWrite(LEDYellowA,LOW);
-digitalWrite(LEDRedA,LOW);
-digitalWrite(LEDGreen,HIGH);
-*/
+  }*/
+  TrafficLights();
 
 }
 
@@ -189,7 +161,7 @@ void TrafficLights()
   delay(5000);
 
   // Buzzer sound for blind people
-  if (ButtonPressed && waitTime == 0) {
+  /*if (ButtonPressed && waitTime == 0) {
     digitalWrite(PedestrianLEDRed,LOW);
     digitalWrite(PedestrianLEDGreen,HIGH);
   } else {
@@ -214,7 +186,7 @@ void TrafficLights()
         lastBuzzTime = currentTime;
       }
     }
-  }
+  }*/
 }
 
 void Pedestrians()
