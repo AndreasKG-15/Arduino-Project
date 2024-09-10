@@ -39,44 +39,36 @@ void loop() {
   delay(1500);
   // Start execution on side A
   digitalWrite(LEDYellow, HIGH);
-  digitalWrite(LEDRedA, HIGH);
   delay(3000);
   // Green on side A
   digitalWrite(LEDRed, LOW);
   digitalWrite(LEDYellow, LOW);
   digitalWrite(LEDGreen, HIGH);
-  digitalWrite(LEDRedA, HIGH);
   delay(5000);
   // Green -> yellow side A
   digitalWrite(LEDGreen, LOW);
   digitalWrite(LEDYellow, HIGH);
-  digitalWrite(LEDRedA, HIGH);
   delay(2000);
   // Yellow -> Red side A
   digitalWrite(LEDYellow, LOW);
   digitalWrite(LEDRed, HIGH);
-  digitalWrite(LEDRedA, HIGH);
   delay(3000);
 
   // Start execution on side B
   digitalWrite(LEDYellowA, HIGH);
-  digitalWrite(LEDRed, HIGH);
   delay(3000);
   // Red and Yellow ON on side B
   digitalWrite(LEDRedA, LOW);
   digitalWrite(LEDYellowA, LOW);
   digitalWrite(LEDGreenA, HIGH);
-  digitalWrite(LEDRed, HIGH);
   delay(10000);
   // Green -> yellow side B
   digitalWrite(LEDGreenA, LOW);
   digitalWrite(LEDYellowA, HIGH);
-  digitalWrite(LEDRed, HIGH);
   delay(2000);
   // Yellow -> Red side B
   digitalWrite(LEDYellowA, LOW);
   digitalWrite(LEDRedA, HIGH);
-  digitalWrite(LEDRed, HIGH);
   delay(5000);
 
 
