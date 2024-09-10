@@ -1,12 +1,19 @@
+
+// Traffic lights - side A
 #define LEDGreen 4
-#define LEDYellow 3
-#define LEDRed 2
+#define LEDYellow 1
+#define LEDRed 0
+// Traffic lights - side B
 #define LEDGreenA 10
 #define LEDYellowA 9
 #define LEDRedA 8
+// Pedestrian button and lights
+#define PedestrianLEDGreen 6
+#define PedestrianLEDRed 7
+#define PedestrianButton 12
 
-
-
+int waitTime = 0;
+bool ButtonPressed = false;
 
 
 void setup() {
@@ -34,44 +41,12 @@ test(LEDRedA);*/
 
 void loop() {
   // put your main code here, to run repeatedly:
-
-  // Starting point
-  digitalWrite(LEDRed, HIGH);
-  digitalWrite(LEDRedA, HIGH);
-  delay(1500);
-  // Start execution on side A
-  digitalWrite(LEDYellow, HIGH);
-  delay(3000);
-  // Green on side A
-  digitalWrite(LEDRed, LOW);
-  digitalWrite(LEDYellow, LOW);
-  digitalWrite(LEDGreen, HIGH);
-  delay(5000);
-  // Green -> yellow side A
-  digitalWrite(LEDGreen, LOW);
-  digitalWrite(LEDYellow, HIGH);
-  delay(2000);
-  // Yellow -> Red side A
-  digitalWrite(LEDYellow, LOW);
-  digitalWrite(LEDRed, HIGH);
-  delay(3000);
-
-  // Start execution on side B
-  digitalWrite(LEDYellowA, HIGH);
-  delay(3000);
-  // Red and Yellow ON on side B
-  digitalWrite(LEDRedA, LOW);
-  digitalWrite(LEDYellowA, LOW);
-  digitalWrite(LEDGreenA, HIGH);
-  delay(10000);
-  // Green -> yellow side B
-  digitalWrite(LEDGreenA, LOW);
-  digitalWrite(LEDYellowA, HIGH);
-  delay(2000);
-  // Yellow -> Red side B
-  digitalWrite(LEDYellowA, LOW);
-  digitalWrite(LEDRedA, HIGH);
-  delay(5000);
+  if(digitalRead(PedestrianButton) == HIGH && !ButtonPressed)
+  {
+    ButtonPressed = true;
+    waitTime = 20;
+  }
+  TrafficLights();
 
 
 /* Toby's kode
@@ -101,6 +76,51 @@ digitalWrite(LEDGreen,HIGH);
 
 }
 
+void TrafficLights()
+{
+  // Starting point
+  digitalWrite(LEDRed, HIGH);
+  digitalWrite(LEDRedA, HIGH);
+  delay(1500);
+  // Start execution - side A
+  digitalWrite(LEDYellow, HIGH);
+  delay(3000);
+  // Green - side A
+  digitalWrite(LEDRed, LOW);
+  digitalWrite(LEDYellow, LOW);
+  digitalWrite(LEDGreen, HIGH);
+  delay(5000);
+  // Green -> yellow - side A
+  digitalWrite(LEDGreen, LOW);
+  digitalWrite(LEDYellow, HIGH);
+  delay(2000);
+  // Yellow -> Red - side A
+  digitalWrite(LEDYellow, LOW);
+  digitalWrite(LEDRed, HIGH);
+  delay(3000);
+
+  // Start execution - side B
+  digitalWrite(LEDYellowA, HIGH);
+  delay(3000);
+  // Red and Yellow ON - side B
+  digitalWrite(LEDRedA, LOW);
+  digitalWrite(LEDYellowA, LOW);
+  digitalWrite(LEDGreenA, HIGH);
+  delay(10000);
+  // Green -> yellow - side B
+  digitalWrite(LEDGreenA, LOW);
+  digitalWrite(LEDYellowA, HIGH);
+  delay(2000);
+  // Yellow -> Red - side B
+  digitalWrite(LEDYellowA, LOW);
+  digitalWrite(LEDRedA, HIGH);
+  delay(5000);
+}
+
+void Pedestrians()
+{
+
+}
 int test(int LED)
 {
   digitalWrite(LED, HIGH);
