@@ -7,8 +7,6 @@
 
 
 
-
-
 void setup() {
   // put your setup code here, to run once:
 pinMode(LEDGreen, OUTPUT);
@@ -81,6 +79,9 @@ void loop() {
 
 
 /* Toby's kode
+=======
+digitalWrite(LEDGreen,HIGH);
+>>>>>>> Stashed changes
 digitalWrite(LEDRedA,HIGH);
 digitalWrite(LEDRed, LOW);
 delay(5000);
@@ -103,6 +104,7 @@ delay(3000);
 digitalWrite(LEDYellowA,LOW);
 digitalWrite(LEDRedA,LOW);
 digitalWrite(LEDGreen,HIGH);
+<<<<<<< Updated upstream
 */
 
 }
