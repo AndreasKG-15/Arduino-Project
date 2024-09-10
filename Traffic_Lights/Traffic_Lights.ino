@@ -11,20 +11,26 @@
 
 void setup() {
   // put your setup code here, to run once:
-pinMode(LEDGreen, OUTPUT);
-pinMode(LEDYellow, OUTPUT);
-pinMode(LEDRed, OUTPUT);
 
-pinMode(LEDGreenA, OUTPUT);
-pinMode(LEDYellowA, OUTPUT);
-pinMode(LEDRedA, OUTPUT);
+  Serial.begin(9600);
+  while(!Serial)
+  {
+    ;
+  }
+  pinMode(LEDGreen, OUTPUT);
+  pinMode(LEDYellow, OUTPUT);
+  pinMode(LEDRed, OUTPUT);
 
-test(LEDGreen);
-test(LEDYellow);
-test(LEDRed);
-test(LEDGreenA);
-test(LEDYellowA);
-test(LEDRedA);
+  pinMode(LEDGreenA, OUTPUT);
+  pinMode(LEDYellowA, OUTPUT);
+  pinMode(LEDRedA, OUTPUT);
+
+  test(LEDGreen);
+  test(LEDYellow);
+  test(LEDRed);
+  test(LEDGreenA);
+  test(LEDYellowA);
+  test(LEDRedA);
 
 
 
@@ -37,12 +43,18 @@ void loop() {
 
 
 
-
-
-
 }
 
 int test(int LED)
 {
   digitalWrite(LED, HIGH);
+}
+
+int LEDon(int LED)
+{
+  digitalWrite(LED, HIGH);
+}
+int LEDoff(int LED)
+{
+  digitalWrite(LED, LOW);
 }
