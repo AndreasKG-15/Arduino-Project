@@ -67,6 +67,11 @@ void loop() {
     waitTime--;
   } else 
     ButtonPressed = false 
+    digitalWrite(pedestrianLEDRed, LOW);
+    digitalWrite(pedestrianLEDGreen, HIGH);
+    delay(5000); // Allow pedestrians to cross for 5 seconds
+    digitalWrite(pedestrianLEDGreen, LOW);
+    digitalWrite(pedestrianLEDRed, HIGH);
   
 
 
