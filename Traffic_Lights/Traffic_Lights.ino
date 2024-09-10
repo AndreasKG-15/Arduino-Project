@@ -15,6 +15,11 @@ LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars
 #define PedestrianLEDRed 7
 #define PedestrianButton 12
 
+
+// Variables
+int GreenTimer = 5000;
+int YellowTimer = 3000;
+int RedTimer = 4000;
 int waitTime = 0;
 bool ButtonPressed = false;
 
@@ -54,8 +59,55 @@ test(LEDRedA);*/
 
 void loop() {
   // put your main code here, to run repeatedly:
-  digitalWrite(PedestrianLEDRed, HIGH);
+  LEDon(PedestrianLEDRed);
   Serial.println(digitalRead(PedestrianButton));
+  Pedestrians();
+  //TrafficLights();
+}
+
+void TrafficLights()
+{
+  // Starting point
+  LEDon(LEDRed);
+  LEDon(LEDRedA);
+  delay(1500);
+  // Start execution - side A
+  LEDon(LEDYellow);
+  delay(3000);
+  // Green - side A
+  LEDoff(LEDRed);
+  LEDoff(LEDYellow);
+  LEDon(LEDGreen);
+  delay(5000);
+  // Green -> yellow - side A
+  LEDoff(LEDGreen);
+  LEDon(LEDYellow);
+  delay(2000);
+  // Yellow -> Red - side A
+  LEDoff(LEDYellow);
+  LEDon(LEDRed);
+  delay(4000);
+
+  // Start execution - side B
+  LEDon(LEDYellowA);
+  delay(3000);
+  // Red and Yellow ON - side B
+  LEDoff(LEDRedA);
+  LEDoff(LEDYellowA);
+  LEDon(LEDGreenA);
+  delay(10000);
+  // Green -> yellow - side B
+  LEDoff(LEDGreenA);
+  LEDon(LEDYellowA);
+  delay(2000);
+  // Yellow -> Red - side B
+  LEDoff(LEDYellowA);
+  LEDon(LEDRedA);
+  delay(5000);
+}
+
+void Pedestrians()
+{
   if(digitalRead(PedestrianButton) == HIGH)
   {
     ButtonPressed = true;
@@ -75,89 +127,15 @@ void loop() {
 //Timer Countdown
   if(ButtonPressed == true)
   {
-    digitalWrite(PedestrianLEDRed, LOW);
-    digitalWrite(PedestrianLEDGreen, HIGH);
+    LEDoff(PedestrianLEDRed);
+    LEDon(PedestrianLEDGreen);
     lcd.clear();
     delay(5000); // Allow pedestrians to cross for 5 seconds
-    digitalWrite(PedestrianLEDGreen, LOW);
-    digitalWrite(PedestrianLEDRed, HIGH);
+    LEDoff(PedestrianLEDGreen);
+    LEDon(PedestrianLEDRed);
     ButtonPressed = false;
     lcd.print("Wait before cross:");
   }
-
-  //TrafficLights();
-
-/* Toby's kode
-digitalWrite(LEDRedA,HIGH);
-digitalWrite(LEDRed, LOW);
-delay(5000);
-
-digitalWrite(LEDGreen,LOW);
-digitalWrite(LEDYellow,HIGH);
-delay(3000);
-
-digitalWrite(LEDYellow,LOW);
-digitalWrite(LEDRed,HIGH);
-digitalWrite(LEDGreenA,HIGH);
-digitalWrite(LEDRedA, LOW);
-delay(10000);
-
-digitalWrite(LEDGreenA,LOW);
-digitalWrite(LEDYellowA,HIGH);
-digitalWrite(LEDRedA, HIGH);
-delay(3000);
-
-digitalWrite(LEDYellowA,LOW);
-digitalWrite(LEDRedA,LOW);
-digitalWrite(LEDGreen,HIGH);
-*/
-
-}
-
-void TrafficLights()
-{
-  // Starting point
-  digitalWrite(LEDRed, HIGH);
-  digitalWrite(LEDRedA, HIGH);
-  delay(1500);
-  // Start execution - side A
-  digitalWrite(LEDYellow, HIGH);
-  delay(3000);
-  // Green - side A
-  digitalWrite(LEDRed, LOW);
-  digitalWrite(LEDYellow, LOW);
-  digitalWrite(LEDGreen, HIGH);
-  delay(5000);
-  // Green -> yellow - side A
-  digitalWrite(LEDGreen, LOW);
-  digitalWrite(LEDYellow, HIGH);
-  delay(2000);
-  // Yellow -> Red - side A
-  digitalWrite(LEDYellow, LOW);
-  digitalWrite(LEDRed, HIGH);
-  delay(3000);
-
-  // Start execution - side B
-  digitalWrite(LEDYellowA, HIGH);
-  delay(3000);
-  // Red and Yellow ON - side B
-  digitalWrite(LEDRedA, LOW);
-  digitalWrite(LEDYellowA, LOW);
-  digitalWrite(LEDGreenA, HIGH);
-  delay(10000);
-  // Green -> yellow - side B
-  digitalWrite(LEDGreenA, LOW);
-  digitalWrite(LEDYellowA, HIGH);
-  delay(2000);
-  // Yellow -> Red - side B
-  digitalWrite(LEDYellowA, LOW);
-  digitalWrite(LEDRedA, HIGH);
-  delay(5000);
-}
-
-void Pedestrians()
-{
-
 }
 int test(int LED)
 {
